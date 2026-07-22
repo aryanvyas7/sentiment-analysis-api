@@ -2,6 +2,19 @@
 
 A REST API that classifies text as **positive** or **negative**, built with FastAPI and a quantized DistilBERT sentiment analysis model running on ONNX Runtime.
 
+**Live API:** https://sentiment-analysis-api-e3xy.onrender.com
+**Interactive docs:** https://sentiment-analysis-api-e3xy.onrender.com/docs
+
+> Hosted on Render's free tier, which spins the service down after periods of inactivity. If it hasn't been used in a while, the first request may take up to a minute while it spins back up — subsequent requests are fast.
+
+Try it directly:
+
+```bash
+curl -X POST https://sentiment-analysis-api-e3xy.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text": "I absolutely love this API!"}'
+```
+
 ## Tech Stack
 
 - **Python** — core language, isolated via `venv`
@@ -87,4 +100,4 @@ The API will be available at `http://localhost:8000`.
 
 ## Deployment
 
-This project is deployed to [Render](https://render.com) as a Dockerized web service.
+Deployed to [Render](https://render.com) as a Dockerized web service: https://sentiment-analysis-api-e3xy.onrender.com
