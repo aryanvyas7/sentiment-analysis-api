@@ -1,16 +1,18 @@
 # Sentiment Analysis API
 
-A REST API that classifies text as **positive** or **negative**, built with FastAPI and a HuggingFace Transformers sentiment analysis model.
+A REST API that classifies text as **positive** or **negative**, built with FastAPI and a quantized DistilBERT sentiment analysis model running on ONNX Runtime.
 
 ## Tech Stack
 
 - **Python** — core language, isolated via `venv`
 - **FastAPI** — web framework for the REST API
 - **Uvicorn** — ASGI server that runs the FastAPI app
-- **HuggingFace Transformers** — pretrained sentiment analysis model (`distilbert-base-uncased-finetuned-sst-2-english`)
-- **PyTorch** — deep learning backend the model runs on
+- **HuggingFace Transformers** — tokenizer and model config utilities for a pretrained sentiment model (`distilbert-base-uncased-finetuned-sst-2-english`)
+- **ONNX Runtime** — runs the model's inference graph from a pre-exported, int8-quantized ONNX file (no PyTorch/TensorFlow at runtime)
 - **Docker** — containerization for consistent deployment
-- **Render** — hosting/deployment platform
+- **Render** — hosting/deployment platform (free tier, 512MB RAM)
+
+> **Why ONNX Runtime instead of PyTorch?** The original PyTorch-based implementation exceeded Render's 512MB free-tier memory limit. Swapping to a pre-quantized ONNX build of the same DistilBERT model cut resident memory to roughly 100MB, with no meaningful change in prediction accuracy.
 
 ## API Endpoints
 
@@ -43,7 +45,7 @@ Classifies the sentiment of a piece of text.
 ```json
 {
   "label": "POSITIVE",
-  "score": 0.999871015548706
+  "score": 0.9998716115951538
 }
 ```
 
